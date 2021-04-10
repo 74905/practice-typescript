@@ -9,8 +9,6 @@ const path = require('path')
  mongoose.connect(config.DB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
 }).then(
   () => {
     if(process.env.NODE_ENV !== 'production'){
@@ -25,14 +23,14 @@ const app = express()
 app.use('/api/v1/products', productRoutes)
 
 
-if(process.env.NODE_ENV === 'production'){
-const appPath = path.join(__dirname, '..', 'dist', 'first-my-app')
+ if(process.env.NODE_ENV === 'production'){
+const appPath = path.join( __dirname, '..', 'dist', 'first-my-app')
 app.use(express.static(appPath))
 app.get('*', function(req,res){
   res.sendFile(path.resolve(appPath, 'index.html'))
 })
 }
 const PORT = process.env.PORT || '3001'
-app.listen('3001', function(){
+app.listen(PORT, function(){
   console.log('I am running')
 })
